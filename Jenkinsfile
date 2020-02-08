@@ -1,12 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-  agent {
-    label "rhel7"
-  }
-  options {
-        timestamps()
-        timeout(time: 150, unit: "MINUTES")
+  agent any
   }
   stages {
     stage("build") {
