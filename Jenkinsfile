@@ -1,29 +1,21 @@
-#!/usr/bin/env groovy
-
 pipeline {
-  agent any
-  }
-  stages {
-    stage("build") {
-      steps {
-        sh '''#!/usr/bin/env bash
-          echo
-	  pwd
-          echo
-	  ls -alrth
-        '''
-      }
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
     }
-  }
-  post {
-    always {
-      // cleanup workspace
-      dir("${env.WORKSPACE}") { deleteDir() }
-    }
-    failure {
-        mail to: "$NOTIFY",
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
-    }
-  }
 }
