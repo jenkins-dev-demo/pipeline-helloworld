@@ -1,15 +1,16 @@
 pipeline {
   agent any
   stages {
-    stage("env") {
+    stage('env') {
       steps {
-      	sh '''#!/usr/bin/env bash
+        sh '''#!/usr/bin/env bash
 	echo
 	echo "ENV"
 	'''
       }
     }
-    stage("build") {
+
+    stage('build') {
       steps {
         sh '''#!/usr/bin/env bash
           echo
@@ -19,17 +20,19 @@ pipeline {
         '''
       }
     }
+
   }
   post {
     always {
-      // cleanup workspace
-      dir("${env.WORKSPACE}") { deleteDir() }
+      dir("${env.WORKSPACE}") {
+        deleteDir()
+      }
+
     }
+
     failure {
-        mail to: "$NOTIFY",
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
+      mail(to: "$NOTIFY", subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}")
     }
+
   }
 }
-
