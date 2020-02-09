@@ -6,7 +6,6 @@ pipeline {
   stages {
     stage('env') {
       steps {
-      	def username = 'Jenkins'
         sh '''#!/usr/bin/env bash
 	echo
 	echo "ENV"
